@@ -40,7 +40,9 @@ function App() {
             handleSaveClicked={handleAddProject}
           />
         )}
-        {!addProjectClicked && <NoProjectSelected />}
+        {!addProjectClicked && (
+          <NoProjectSelected handleAddProject={handleAddProject} />
+        )}
       </main>
     </>
   );

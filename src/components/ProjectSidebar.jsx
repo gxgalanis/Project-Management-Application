@@ -1,5 +1,3 @@
-import { createPortal } from "react-dom";
-
 export default function ProjectSidebar({ projectList, handleAddNewClicked }) {
   return (
     <aside className="bg-black w-1/3 px-8 py-16 text-stone-50 md:w-72 rounded-r-xl">
