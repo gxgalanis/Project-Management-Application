@@ -1,4 +1,8 @@
-export default function ProjectSidebar({ projectList, handleAddNewClicked }) {
+export default function ProjectSidebar({
+  projectList,
+  handleAddNewClicked,
+  handleSelectProject,
+}) {
   return (
     <aside className="bg-black w-1/3 px-8 py-16 text-stone-50 md:w-72 rounded-r-xl">
       <h2 className="mb-8 font-bold uppercase md:text-xl text-stone-200">
@@ -13,7 +17,10 @@ export default function ProjectSidebar({ projectList, handleAddNewClicked }) {
       <ul>
         {projectList.map((p, i) => (
           <li className="flex justify-between my-4" key={`${p.title}${i}`}>
-            <button className="w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 hover:bg-stone-800">
+            <button
+              onClick={() => handleSelectProject(p)}
+              className="w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 hover:bg-stone-800"
+            >
               {p.title}
             </button>
           </li>

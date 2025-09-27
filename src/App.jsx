@@ -3,13 +3,21 @@ import { useState, useRef } from "react";
 import AddNewProject from "./components/AddNewProject";
 import ProjectSidebar from "./components/ProjectSidebar";
 import NoProjectSelected from "./components/NoProjectSelected";
+import ProjectSelected from "./components/ProjectSelected";
 
 function App() {
   const [projects, setProjects] = useState([]);
   const [addProjectClicked, setAddProjectClicked] = useState(false);
 
+  const [selectedProject, setSelectedProject] = useState(null);
+
   function handleAddProject(clicked) {
     setAddProjectClicked(clicked);
+  }
+
+  function handleSelectProject(project) {
+    setAddProjectClicked(false);
+    setSelectedProject(project);
   }
 
   function onSaveProject(titleVal, descriptionVal, dueDateVal) {
@@ -33,6 +41,7 @@ function App() {
         <ProjectSidebar
           projectList={projects}
           handleAddNewClicked={handleAddProject}
+          handleSelectProject={handleSelectProject}
         />
         {addProjectClicked && (
           <AddNewProject
@@ -40,8 +49,11 @@ function App() {
             handleSaveClicked={handleAddProject}
           />
         )}
-        {!addProjectClicked && (
+        {!addProjectClicked && !selectedProject && (
           <NoProjectSelected handleAddProject={handleAddProject} />
+        )}
+        {!addProjectClicked && selectedProject && (
+          <ProjectSelected project={selectedProject} />
         )}
       </main>
     </>
