@@ -20,17 +20,30 @@ function App() {
     setSelectedProject(project);
   }
 
+  function handleAddTask(newTask) {
+    setProjects((prevProjects) =>
+      prevProjects.map((p) =>
+        p.id === selectedProject.id ? { ...p, tasks: [...p.tasks, newTask] } : p
+      )
+    );
+
+    setSelectedProject((prev) => ({
+      ...prev,
+      tasks: [...prev.tasks, newTask],
+    }));
+  }
+
   function onSaveProject(titleVal, descriptionVal, dueDateVal) {
-    console.log("went in here", titleVal);
-    setProjects((prevProjects) => {
-      prevProjects.push({
+    setProjects((prevProjects) => [
+      ...prevProjects,
+      {
+        id: Date.now(),
         title: titleVal,
         description: descriptionVal,
         dueDate: dueDateVal,
-      });
-      return prevProjects;
-    });
-    console.log("in function", projects);
+        tasks: [],
+      },
+    ]);
   }
 
   console.log(projects);
@@ -53,7 +66,10 @@ function App() {
           <NoProjectSelected handleAddProject={handleAddProject} />
         )}
         {!addProjectClicked && selectedProject && (
-          <ProjectSelected project={selectedProject} />
+          <ProjectSelected
+            project={selectedProject}
+            handleAddTask={handleAddTask}
+          />
         )}
       </main>
     </>

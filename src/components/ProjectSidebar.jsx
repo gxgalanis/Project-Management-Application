@@ -15,8 +15,8 @@ export default function ProjectSidebar({
         +Add Project
       </button>
       <ul>
-        {projectList.map((p, i) => (
-          <li className="flex justify-between my-4" key={`${p.title}${i}`}>
+        {projectList.map((p) => (
+          <li className="flex justify-between my-4" key={`${p.id}`}>
             <button
               onClick={() => handleSelectProject(p)}
               className="w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 hover:bg-stone-800"
