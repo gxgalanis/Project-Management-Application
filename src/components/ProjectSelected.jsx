@@ -1,7 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-export default function ProjectSelected({ project, handleAddTask }) {
-  const newTask = useRef();
+export default function ProjectSelected({ project, handleAddTask, clearTask }) {
+  const taskRef = useRef();
+
+  const [tasks, setTasks] = useState(project.tasks);
 
   function formatDate(date) {
     const toDate = new Date(date);
@@ -15,8 +17,19 @@ export default function ProjectSelected({ project, handleAddTask }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleAddTask(newTask.current.value);
-    newTask.current.value = "";
+    const newTask = { id: Date.now(), descr: taskRef.current.value };
+    setTasks((prevTasks) => {
+      return [...prevTasks, newTask];
+    });
+    handleAddTask(newTask);
+    taskRef.current.value = "";
+  }
+
+  function handleClear(t) {
+    clearTask(t);
+    setTasks((prevTasks) => {
+      return prevTasks.filter((pt) => pt.id !== t.id);
+    });
   }
 
   return (
@@ -37,18 +50,21 @@ export default function ProjectSelected({ project, handleAddTask }) {
         <input
           className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
           type="text"
-          ref={newTask}
+          ref={taskRef}
           required
         />
         <button type="submit">Add Task</button>
       </form>
-      {!(project.tasks.length > 0) && <p>Your project has no tasks</p>}
-      {project.tasks.length > 0 && (
+      {!(tasks.length > 0) && <p>Your project has no tasks</p>}
+      {tasks.length > 0 && (
         <ul className="p-4 mt-8 rounded-md bg-stone-100">
-          {project.tasks.map((t) => (
-            <li className="flex justify-between my-4">
-              <p className="text-stone-800 my-4">{t}</p>
-              <button className="text-stone-700 hover:text-red-500">
+          {tasks.map((t) => (
+            <li key={`${t.id}`} className="flex justify-between my-4">
+              <p className="text-stone-800 my-4">{t.descr}</p>
+              <button
+                className="text-stone-700 hover:text-red-500"
+                onClick={() => handleClear(t)}
+              >
                 Clear
               </button>
             </li>

@@ -23,13 +23,36 @@ function App() {
   function handleAddTask(newTask) {
     setProjects((prevProjects) =>
       prevProjects.map((p) =>
-        p.id === selectedProject.id ? { ...p, tasks: [...p.tasks, newTask] } : p
+        p.id === selectedProject.id
+          ? {
+              ...p,
+              tasks: [...p.tasks, newTask],
+            }
+          : p
       )
     );
 
     setSelectedProject((prev) => ({
       ...prev,
       tasks: [...prev.tasks, newTask],
+    }));
+  }
+
+  function handleClearTask(task) {
+    setProjects((prevProjects) =>
+      prevProjects.map((p) =>
+        p.id === selectedProject.id
+          ? {
+              ...p,
+              tasks: [p.tasks.filter((t) => t.id !== task.id)],
+            }
+          : p
+      )
+    );
+
+    setSelectedProject((prev) => ({
+      ...prev,
+      tasks: [prev.tasks.filter((t) => t.id !== task.id)],
     }));
   }
 
@@ -69,6 +92,7 @@ function App() {
           <ProjectSelected
             project={selectedProject}
             handleAddTask={handleAddTask}
+            clearTask={handleClearTask}
           />
         )}
       </main>
