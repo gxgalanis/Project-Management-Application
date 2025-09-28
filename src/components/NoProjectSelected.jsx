@@ -1,6 +1,6 @@
 import noPage from "../assets/no-projects.png";
 
-export default function NoProjectSelected({ handleAddProject }) {
+export default function NoProjectSelected({ handleAddNewClicked }) {
   return (
     <div className="mt-24 text-center w-2/3">
       <img
@@ -15,7 +15,7 @@ export default function NoProjectSelected({ handleAddProject }) {
         Select a project or get started with a new one
       </p>
       <button
-        onClick={() => handleAddProject(true)}
+        onClick={() => handleAddNewClicked(true)}
         className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950"
       >
         Create new project

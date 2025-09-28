@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useRef } from "react";
 
-export default function AddNewProject({ onSave, handleSaveClicked }) {
-  let [title, setTitle] = useState("");
-  let [description, setDescription] = useState("");
-  let [dueDate, setDueDate] = useState("");
+export default function AddNewProject({ onSave, handleButtonClicked }) {
+  const title = useRef();
+  const description = useRef();
+  const dueDate = useRef();
 
   function handleSubmit(e) {
-    onSave(title, description, dueDate);
-    handleSaveClicked(false);
+    onSave(
+      title.current.value,
+      description.current.value,
+      dueDate.current.value
+    );
+    handleButtonClicked(null);
+    title.current.value = "";
+    description.current.value = "";
+    dueDate.current.value = "";
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <menu className="flex items-center justify-end gap-4 my-4">
-          <button className="text-stone-800 hover:text-stone-950">
+          <button
+            className="text-stone-800 hover:text-stone-950"
+            onClick={() => handleButtonClicked(null)}
+          >
             Cancel
           </button>
           <button
@@ -30,8 +40,7 @@ export default function AddNewProject({ onSave, handleSaveClicked }) {
         <input
           className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          ref={title}
           required
         />
         <label className="text-sm font-bold uppercase text-stone-500">
@@ -39,8 +48,7 @@ export default function AddNewProject({ onSave, handleSaveClicked }) {
         </label>
         <textarea
           className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          ref={description}
           required
         />
         <label className="text-sm font-bold uppercase text-stone-500">
@@ -49,8 +57,7 @@ export default function AddNewProject({ onSave, handleSaveClicked }) {
         <input
           className="w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600"
           type="date"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
+          ref={dueDate}
           required
         />
       </form>

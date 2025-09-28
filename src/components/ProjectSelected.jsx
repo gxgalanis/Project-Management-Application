@@ -1,9 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-export default function ProjectSelected({ project, handleAddTask, clearTask }) {
+export default function ProjectSelected({ project, addTask, clearTask }) {
   const taskRef = useRef();
-
-  const [tasks, setTasks] = useState(project.tasks);
 
   function formatDate(date) {
     const toDate = new Date(date);
@@ -18,18 +16,8 @@ export default function ProjectSelected({ project, handleAddTask, clearTask }) {
   function handleSubmit(e) {
     e.preventDefault();
     const newTask = { id: Date.now(), descr: taskRef.current.value };
-    setTasks((prevTasks) => {
-      return [...prevTasks, newTask];
-    });
-    handleAddTask(newTask);
+    addTask(newTask);
     taskRef.current.value = "";
-  }
-
-  function handleClear(t) {
-    clearTask(t);
-    setTasks((prevTasks) => {
-      return prevTasks.filter((pt) => pt.id !== t.id);
-    });
   }
 
   return (
@@ -55,15 +43,15 @@ export default function ProjectSelected({ project, handleAddTask, clearTask }) {
         />
         <button type="submit">Add Task</button>
       </form>
-      {!(tasks.length > 0) && <p>Your project has no tasks</p>}
-      {tasks.length > 0 && (
+      {!(project.tasks.length > 0) && <p>Your project has no tasks</p>}
+      {project.tasks.length > 0 && (
         <ul className="p-4 mt-8 rounded-md bg-stone-100">
-          {tasks.map((t) => (
+          {project.tasks.map((t) => (
             <li key={`${t.id}`} className="flex justify-between my-4">
               <p className="text-stone-800 my-4">{t.descr}</p>
               <button
                 className="text-stone-700 hover:text-red-500"
-                onClick={() => handleClear(t)}
+                onClick={() => clearTask(t)}
               >
                 Clear
               </button>

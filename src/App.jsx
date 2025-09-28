@@ -11,7 +11,7 @@ function App() {
 
   const [selectedProject, setSelectedProject] = useState(null);
 
-  function handleAddProject(clicked) {
+  function handleAddProjectFlag(clicked) {
     setAddProjectClicked(clicked);
   }
 
@@ -44,7 +44,7 @@ function App() {
         p.id === selectedProject.id
           ? {
               ...p,
-              tasks: [p.tasks.filter((t) => t.id !== task.id)],
+              tasks: p.tasks.filter((t) => t.id !== task.id),
             }
           : p
       )
@@ -52,7 +52,7 @@ function App() {
 
     setSelectedProject((prev) => ({
       ...prev,
-      tasks: [prev.tasks.filter((t) => t.id !== task.id)],
+      tasks: prev.tasks.filter((t) => t.id !== task.id),
     }));
   }
 
@@ -76,22 +76,22 @@ function App() {
       <main className="h-screen my-8 flex gap-8">
         <ProjectSidebar
           projectList={projects}
-          handleAddNewClicked={handleAddProject}
+          handleAddNewClicked={handleAddProjectFlag}
           handleSelectProject={handleSelectProject}
         />
         {addProjectClicked && (
           <AddNewProject
             onSave={onSaveProject}
-            handleSaveClicked={handleAddProject}
+            handleButtonClicked={handleSelectProject}
           />
         )}
         {!addProjectClicked && !selectedProject && (
-          <NoProjectSelected handleAddProject={handleAddProject} />
+          <NoProjectSelected handleAddNewClicked={handleAddProjectFlag} />
         )}
         {!addProjectClicked && selectedProject && (
           <ProjectSelected
             project={selectedProject}
-            handleAddTask={handleAddTask}
+            addTask={handleAddTask}
             clearTask={handleClearTask}
           />
         )}
