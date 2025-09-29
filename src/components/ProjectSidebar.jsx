@@ -19,7 +19,8 @@ export default function ProjectSidebar({
           <li className="flex justify-between my-4" key={`${p.id}`}>
             <button
               onClick={() => handleSelectProject(p)}
-              className="w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 hover:bg-stone-800"
+              className="w-full text-left px-2 py-1 rounded-sm my-1 text-stone-4
+              00 hover:text-stone-200 hover:bg-stone-800"
             >
               {p.title}
             </button>
