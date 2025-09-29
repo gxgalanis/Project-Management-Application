@@ -69,6 +69,13 @@ function App() {
     ]);
   }
 
+  function onDeleteProject(projectToDelete){
+    setProjects((prevProjects) => {
+      return prevProjects.filter(p => p.id !== projectToDelete.id);
+    });
+    setSelectedProject(null);
+  }
+
   console.log(projects);
 
   return (
@@ -93,6 +100,7 @@ function App() {
             project={selectedProject}
             addTask={handleAddTask}
             clearTask={handleClearTask}
+            deleteProject={onDeleteProject}
           />
         )}
       </main>
