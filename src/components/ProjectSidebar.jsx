@@ -2,6 +2,7 @@ export default function ProjectSidebar({
   projectList,
   handleAddNewClicked,
   handleSelectProject,
+  selectedProject
 }) {
   return (
     <aside className="bg-black w-1/3 px-8 py-16 text-stone-50 md:w-72 rounded-r-xl">
@@ -15,17 +16,20 @@ export default function ProjectSidebar({
         +Add Project
       </button>
       <ul>
-        {projectList.map((p) => (
-          <li className="flex justify-between my-4" key={`${p.id}`}>
+        {projectList.map((p) => {
+          let cssClasses = "w-full text-left px-2 py-1 rounded-sm my-1 text-stone-400 hover:text-stone-200 hover:bg-stone-800";
+          if(selectedProject && p.id === selectedProject.id){
+            cssClasses += " bg-stone-800";
+          }
+          return <li className="flex justify-between my-4" key={`${p.id}`}>
             <button
               onClick={() => handleSelectProject(p)}
-              className="w-full text-left px-2 py-1 rounded-sm my-1 text-stone-4
-              00 hover:text-stone-200 hover:bg-stone-800"
+              className={cssClasses}
             >
               {p.title}
             </button>
           </li>
-        ))}
+      })}
       </ul>
     </aside>
   );

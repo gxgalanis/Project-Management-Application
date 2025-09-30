@@ -13,6 +13,7 @@ function App() {
 
   function handleAddProjectFlag(clicked) {
     setAddProjectClicked(clicked);
+    setSelectedProject(null);
   }
 
   function handleSelectProject(project) {
@@ -85,6 +86,7 @@ function App() {
           projectList={projects}
           handleAddNewClicked={handleAddProjectFlag}
           handleSelectProject={handleSelectProject}
+          selectedProject={selectedProject}
         />
         {addProjectClicked && (
           <AddNewProject
